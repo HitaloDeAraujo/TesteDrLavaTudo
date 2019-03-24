@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Cliente";
+}
+
+<h2>Index</h2>
+
+<ol id="OrdensDeServico" data-bind="foreach: OrdensDeServico">
+    <li>
+        <fieldset>
+            <legend>Ordem de Serviço ID = <span data-bind="text: IdOS || 'IdOS?'"></span></legend>
+
+            <h2>Cliente</h2>
+            <div><strong>ID: </strong><span data-bind="text: $data.Cliente.IdCliente || 'IdCliente?'"></span></div>
+            <div><strong>Nome: </strong><span data-bind="text: $data.Cliente.Nome || 'Nome?'"></span></div>
+            <div><strong>E-mail: </strong><span data-bind="text: $data.Cliente.Email || 'Email?'"></span></div>
+            <div><strong>Data de Nascimento: </strong><span data-bind="text: $data.Cliente.DataNasc || 'DataNasc?'"></span></div>
+            <div><strong>Celular: </strong><span data-bind="text: $data.Cliente.Celular || 'Celular?'"></span></div>
+            <div><strong>Telefone residencial: </strong><span data-bind="text: $data.Cliente.TelRes || 'TelRes?'"></span></div>
+
+            <h2>Detalhes da OS</h2>
+            <div><strong>Data de Contratação: </strong><span data-bind="text: $data.DataContratacao || 'DataContratacao?'"></span></div>
+            <div><strong>Data de Execução: </strong><span data-bind="text: $data.DataExecucao || 'DataExecucao?'"></span></div>
+
+            <h2>Serviços desta OS</h2>
+            <ol data-bind="foreach: $data.ServicoPorOS">
+                <li>
+                    <h2>Endereço</h2>
+                    <div><strong>Rua: </strong><span data-bind="text: $data.Rua || 'Rua?'"></span></div>
+                    <div><strong>Bairro: </strong><span data-bind="text: $data.Bairro || 'Bairro?'"></span></div>
+                    <div><strong>Cidade: </strong><span data-bind="text: $data.Cidade || 'Cidade?'"></span></div>
+                    <div><strong>Estado: </strong><span data-bind="text: $data.Estado || 'Estado?'"></span></div>
+                    <div><strong>Pais: </strong><span data-bind="text: $data.Pais || 'Pais?'"></span></div>
+
+                    <h2>Serviço</h2>
+                    <div><strong>ID: </strong><span data-bind="text: $data.Servico.IdServico || 'IdServico?'"></span></div>
+                    <div><strong>Nome: </strong><span data-bind="text: $data.Servico.Nome || 'Nome?'"></span></div>
+                    <div><strong>Custo: </strong><span data-bind="text: $data.Servico.Custo || 'Custo?'"></span></div>
+                    <div><strong>Valor Final: </strong><span data-bind="text: $data.Servico.ValorFinal || 'ValorFinal?'"></span></div>
+                </li>
+            </ol>
+
+        </fieldset>
+    </li>
+</ol>
+
+<script src="~/Scripts/jquery.1.8.3.min.js"></script>
+<script src="~/Scripts/knockout-2.1.0.debug.js"></script>
+<script src="~/Scripts/knockout-2.1.0.js"></script>
+
+<style type="text/css">
+    h2 {
+        background-color: aliceblue;
+    }
+</style>
+
+<script type="text/javascript">
+    function OrdensDeServicoViewModel() {
+        var self = this;
+        var id = @ViewBag.id;
+        self.OrdensDeServico = ko.observableArray([]);
+
+        $.getJSON("/api/cliente/" + id, function (data) {
+            self.OrdensDeServico(data);
+        });
+    }
+    ko.applyBindings(new OrdensDeServicoViewModel());
+
+    $(document).ready(function () {
+        $(window).load(function () {
+            $('#OrdensDeServico').fadeOut(0);
+            $('#OrdensDeServico').fadeIn(1500);
+        });
+
+    });
+</script>

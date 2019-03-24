@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bdDesafioModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="bdDesafioEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Cliente" EntityType="bdDesafioModel.Cliente" />
+    <EntitySet Name="OrdemServico" EntityType="bdDesafioModel.OrdemServico" />
+    <EntitySet Name="Servico" EntityType="bdDesafioModel.Servico" />
+    <EntitySet Name="ServicoPorOS" EntityType="bdDesafioModel.ServicoPorOS" />
+    <AssociationSet Name="FK_Cliente" Association="bdDesafioModel.FK_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="OrdemServico" EntitySet="OrdemServico" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOSIDOS" Association="bdDesafioModel.FK_SOSIDOS">
+      <End Role="OrdemServico" EntitySet="OrdemServico" />
+      <End Role="ServicoPorOS" EntitySet="ServicoPorOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOSSERVICO" Association="bdDesafioModel.FK_SOSSERVICO">
+      <End Role="Servico" EntitySet="Servico" />
+      <End Role="ServicoPorOS" EntitySet="ServicoPorOS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Type="String" Name="IdCliente" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Nome" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="DataNasc" Precision="0" />
+    <Property Type="String" Name="Celular" MaxLength="11" FixedLength="true" Unicode="true" />
+    <Property Type="String" Name="TelRes" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="OrdemServico" Relationship="bdDesafioModel.FK_Cliente" FromRole="Cliente" ToRole="OrdemServico" />
+  </EntityType>
+  <EntityType Name="OrdemServico">
+    <Key>
+      <PropertyRef Name="IdOS" />
+    </Key>
+    <Property Type="Int32" Name="IdOS" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="IdCliente" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="DataContratacao" Precision="0" />
+    <Property Type="DateTime" Name="DataExecucao" Precision="0" />
+    <NavigationProperty Name="Cliente" Relationship="bdDesafioModel.FK_Cliente" FromRole="OrdemServico" ToRole="Cliente" />
+    <NavigationProperty Name="ServicoPorOS" Relationship="bdDesafioModel.FK_SOSIDOS" FromRole="OrdemServico" ToRole="ServicoPorOS" />
+  </EntityType>
+  <EntityType Name="Servico">
+    <Key>
+      <PropertyRef Name="IdServico" />
+    </Key>
+    <Property Type="Int32" Name="IdServico" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Nome" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Single" Name="ValorFinal" />
+    <Property Type="Single" Name="Custo" />
+    <NavigationProperty Name="ServicoPorOS" Relationship="bdDesafioModel.FK_SOSSERVICO" FromRole="Servico" ToRole="ServicoPorOS" />
+  </EntityType>
+  <EntityType Name="ServicoPorOS">
+    <Key>
+      <PropertyRef Name="IdSPO" />
+      <PropertyRef Name="IdOS" />
+      <PropertyRef Name="IdServico" />
+    </Key>
+    <Property Type="Int32" Name="IdSPO" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="IdOS" Nullable="false" />
+    <Property Type="Int32" Name="IdServico" Nullable="false" />
+    <Property Type="String" Name="Numero" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Rua" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Bairro" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Cidade" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Estado" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Pais" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OrdemServico" Relationship="bdDesafioModel.FK_SOSIDOS" FromRole="ServicoPorOS" ToRole="OrdemServico" />
+    <NavigationProperty Name="Servico" Relationship="bdDesafioModel.FK_SOSSERVICO" FromRole="ServicoPorOS" ToRole="Servico" />
+  </EntityType>
+  <Association Name="FK_Cliente">
+    <End Type="bdDesafioModel.Cliente" Role="Cliente" Multiplicity="1" />
+    <End Type="bdDesafioModel.OrdemServico" Role="OrdemServico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="OrdemServico">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOSIDOS">
+    <End Type="bdDesafioModel.OrdemServico" Role="OrdemServico" Multiplicity="1" />
+    <End Type="bdDesafioModel.ServicoPorOS" Role="ServicoPorOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrdemServico">
+        <PropertyRef Name="IdOS" />
+      </Principal>
+      <Dependent Role="ServicoPorOS">
+        <PropertyRef Name="IdOS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOSSERVICO">
+    <End Type="bdDesafioModel.Servico" Role="Servico" Multiplicity="1" />
+    <End Type="bdDesafioModel.ServicoPorOS" Role="ServicoPorOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Servico">
+        <PropertyRef Name="IdServico" />
+      </Principal>
+      <Dependent Role="ServicoPorOS">
+        <PropertyRef Name="IdServico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

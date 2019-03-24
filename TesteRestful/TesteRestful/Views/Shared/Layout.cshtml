@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        @if (ViewBag.id == null)
+        {
+            <a class="navbar-brand">Desenvolvido por Hitalo de Araujo</a>
+        }
+        else
+        {
+            <a class="navbar-brand">Desenvolvido por Hitalo - Mostrando informações para o ID @ViewBag.id</a>
+        }
+    </div>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/jquery.1.8.3.min.js")" ></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.js")"></script>
+</body>
+</html>

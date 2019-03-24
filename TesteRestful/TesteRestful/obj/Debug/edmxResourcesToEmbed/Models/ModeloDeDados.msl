@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bdDesafioModelStoreContainer" CdmEntityContainer="bdDesafioEntities">
+    <EntitySetMapping Name="Cliente">
+      <EntityTypeMapping TypeName="bdDesafioModel.Cliente">
+        <MappingFragment StoreEntitySet="Cliente">
+          <ScalarProperty Name="TelRes" ColumnName="TelRes" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="DataNasc" ColumnName="DataNasc" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrdemServico">
+      <EntityTypeMapping TypeName="bdDesafioModel.OrdemServico">
+        <MappingFragment StoreEntitySet="OrdemServico">
+          <ScalarProperty Name="DataExecucao" ColumnName="DataExecucao" />
+          <ScalarProperty Name="DataContratacao" ColumnName="DataContratacao" />
+          <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+          <ScalarProperty Name="IdOS" ColumnName="IdOS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Servico">
+      <EntityTypeMapping TypeName="bdDesafioModel.Servico">
+        <MappingFragment StoreEntitySet="Servico">
+          <ScalarProperty Name="Custo" ColumnName="Custo" />
+          <ScalarProperty Name="ValorFinal" ColumnName="ValorFinal" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="IdServico" ColumnName="IdServico" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServicoPorOS">
+      <EntityTypeMapping TypeName="bdDesafioModel.ServicoPorOS">
+        <MappingFragment StoreEntitySet="ServicoPorOS">
+          <ScalarProperty Name="Pais" ColumnName="Pais" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+          <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+          <ScalarProperty Name="Rua" ColumnName="Rua" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="IdServico" ColumnName="IdServico" />
+          <ScalarProperty Name="IdOS" ColumnName="IdOS" />
+          <ScalarProperty Name="IdSPO" ColumnName="IdSPO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

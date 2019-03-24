@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bdDesafioModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="bdDesafioModelStoreContainer">
+    <EntitySet Name="Cliente" EntityType="bdDesafioModel.Store.Cliente" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrdemServico" EntityType="bdDesafioModel.Store.OrdemServico" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Servico" EntityType="bdDesafioModel.Store.Servico" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ServicoPorOS" EntityType="bdDesafioModel.Store.ServicoPorOS" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Cliente" Association="bdDesafioModel.Store.FK_Cliente">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="OrdemServico" EntitySet="OrdemServico" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOSIDOS" Association="bdDesafioModel.Store.FK_SOSIDOS">
+      <End Role="OrdemServico" EntitySet="OrdemServico" />
+      <End Role="ServicoPorOS" EntitySet="ServicoPorOS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOSSERVICO" Association="bdDesafioModel.Store.FK_SOSSERVICO">
+      <End Role="Servico" EntitySet="Servico" />
+      <End Role="ServicoPorOS" EntitySet="ServicoPorOS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="IdCliente" />
+    </Key>
+    <Property Name="IdCliente" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Nome" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="DataNasc" Type="date" />
+    <Property Name="Celular" Type="nchar" MaxLength="11" />
+    <Property Name="TelRes" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="OrdemServico">
+    <Key>
+      <PropertyRef Name="IdOS" />
+    </Key>
+    <Property Name="IdOS" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="IdCliente" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="DataContratacao" Type="date" />
+    <Property Name="DataExecucao" Type="date" />
+  </EntityType>
+  <EntityType Name="Servico">
+    <Key>
+      <PropertyRef Name="IdServico" />
+    </Key>
+    <Property Name="IdServico" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Nome" Type="nvarchar" MaxLength="50" />
+    <Property Name="ValorFinal" Type="real" />
+    <Property Name="Custo" Type="real" />
+  </EntityType>
+  <EntityType Name="ServicoPorOS">
+    <Key>
+      <PropertyRef Name="IdSPO" />
+      <PropertyRef Name="IdOS" />
+      <PropertyRef Name="IdServico" />
+    </Key>
+    <Property Name="IdSPO" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="IdOS" Type="int" Nullable="false" />
+    <Property Name="IdServico" Type="int" Nullable="false" />
+    <Property Name="Numero" Type="varchar" MaxLength="10" />
+    <Property Name="Rua" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bairro" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cidade" Type="nvarchar" MaxLength="50" />
+    <Property Name="Estado" Type="nvarchar" MaxLength="50" />
+    <Property Name="Pais" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Cliente">
+    <End Role="Cliente" Type="bdDesafioModel.Store.Cliente" Multiplicity="1" />
+    <End Role="OrdemServico" Type="bdDesafioModel.Store.OrdemServico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="IdCliente" />
+      </Principal>
+      <Dependent Role="OrdemServico">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOSIDOS">
+    <End Role="OrdemServico" Type="bdDesafioModel.Store.OrdemServico" Multiplicity="1" />
+    <End Role="ServicoPorOS" Type="bdDesafioModel.Store.ServicoPorOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrdemServico">
+        <PropertyRef Name="IdOS" />
+      </Principal>
+      <Dependent Role="ServicoPorOS">
+        <PropertyRef Name="IdOS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOSSERVICO">
+    <End Role="Servico" Type="bdDesafioModel.Store.Servico" Multiplicity="1" />
+    <End Role="ServicoPorOS" Type="bdDesafioModel.Store.ServicoPorOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Servico">
+        <PropertyRef Name="IdServico" />
+      </Principal>
+      <Dependent Role="ServicoPorOS">
+        <PropertyRef Name="IdServico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
